@@ -20,27 +20,27 @@ phases:
       - echo Building the Docker image...
       - pwd
       - ls
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
-      # Push the Docker image to ECR
-      - echo Pushing the Docker image to ECR...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      # - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      # # Push the Docker image to ECR
+      # - echo Pushing the Docker image to ECR...
+      # - docker build -t $REPOSITORY_URI:latest .
+      # - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       
   post_build:
     commands:
       # Write image details to a file
       - echo Build completed on `date`
-      - echo pushing to repo
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      # - echo pushing to repo
+      # - docker push $REPOSITORY_URI:latest
+      # - docker push $REPOSITORY_URI:$IMAGE_TAG
       
       # Writing to imagedefination.json: 
-      - aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
+      #- aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
       - DOCKER_CONTAINER_NAME=ecs-frontend
-      - printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"%s","ImageURI":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - echo $DOCKER_CONTAINER_NAME
-      - echo printing imagedefinitions.json
-      - cat taskdef.json
+      - echo printing imageDetail.json
+      #- cat taskdef.json
       - cat appspec.yml
         
 
