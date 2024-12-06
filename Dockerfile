@@ -1,4 +1,4 @@
-FROM node:20-slim AS first
+FROM public.ecr.aws/docker/library/node:20-slim AS first
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm run build:ssr
 
-FROM node:20-slim AS production
+FROM public.ecr.aws/docker/library/node:20-slim AS production
 
 RUN npm install -g pm2
 
