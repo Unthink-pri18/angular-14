@@ -41,10 +41,11 @@ phases:
       - echo $DOCKER_CONTAINER_NAME
       - echo printing imagedefinitions.json
       - cat taskdef.json
+      - cat appspec.yml
         
 
 artifacts:
   files:
-    -  taskdef.json
-    - appspec.yaml
+    - taskdef.json
+    - appspec.yml
     - imagedefinitions.json
