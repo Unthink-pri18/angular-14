@@ -36,13 +36,15 @@ phases:
       
       # Writing to imagedefination.json: 
       - aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
-      #- DOCKER_CONTAINER_NAME=ecs-frontend
-      #- printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      #- echo $DOCKER_CONTAINER_NAME
-      #- echo printing imagedefinitions.json
+      - DOCKER_CONTAINER_NAME=ecs-frontend
+      - printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo $DOCKER_CONTAINER_NAME
+      - echo printing imagedefinitions.json
       - cat taskdef.json
         
 
 artifacts:
   files:
     -  taskdef.json
+    - appspec.yaml
+    - imagedefinitions.json
