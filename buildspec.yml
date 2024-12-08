@@ -30,12 +30,12 @@ phases:
     commands:
       # Write image details to a file
       - echo Build completed on `date`
-      # - echo pushing to repo
-      # - docker push $REPOSITORY_URI:latest
-      # - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo pushing to repo
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       
       # Writing to imagedefination.json: 
-      #- aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
+      - aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
       - DOCKER_CONTAINER_NAME=ecs-frontend
       - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - echo "Generated imageDetail.json:"
