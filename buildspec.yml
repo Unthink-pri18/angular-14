@@ -24,7 +24,7 @@ phases:
       - echo Pushing the Docker image to ECR...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:latest
-      - aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
+      #- aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
       - DOCKER_CONTAINER_NAME=ecs-frontend
       - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - echo "Generated imageDetail.json:"
