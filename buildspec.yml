@@ -29,10 +29,10 @@ phases:
       - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
       - echo "Generated imageDetail.json:"
       - echo $DOCKER_CONTAINER_NAME
-      - cat appspec.yml
+      - cat appspecc.yml
 
 artifacts:
   files:
     - taskdef.json
-    - appspec.yml
+    - appspecc.yml
     - imageDetail.json
