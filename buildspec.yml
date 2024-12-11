@@ -1,41 +1,41 @@
-version: 0.2
-env:
-  variables:
-    AWS_REGION: "ap-south-1"
+# version: 0.2
+# env:
+#   variables:
+#     AWS_REGION: "ap-south-1"
 
-phases:
-  pre_build:
-    commands:
-      - rm -f appspec.yml
-      - mv appspec-stage.yml appspec.yml
-      - ls
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 145023127397.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI=145023127397.dkr.ecr.ap-south-1.amazonaws.com/ecs-angular-14
-      - IMAGE_TAG=proj-frontend-$CODEBUILD_BUILD_NUMBER
+# phases:
+#   pre_build:
+#     commands:
+#       - rm -f appspec.yml
+#       - mv appspec-stage.yml appspec.yml
+#       - ls
+#       - echo Logging in to Amazon ECR...
+#       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 145023127397.dkr.ecr.ap-south-1.amazonaws.com
+#       - REPOSITORY_URI=145023127397.dkr.ecr.ap-south-1.amazonaws.com/ecs-angular-14
+#       - IMAGE_TAG=proj-frontend-$CODEBUILD_BUILD_NUMBER
 
-  build:
-    commands:
-      - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
-      # Tag the image with "latest"
-      - docker tag $REPOSITORY_URI:$IMAGE_TAG $REPOSITORY_URI:latest
+#   build:
+#     commands:
+#       - echo Building the Docker image...
+#       - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+#       # Tag the image with "latest"
+#       - docker tag $REPOSITORY_URI:$IMAGE_TAG $REPOSITORY_URI:latest
 
-  post_build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image to ECR...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - docker push $REPOSITORY_URI:latest
-      #- aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
-      - DOCKER_CONTAINER_NAME=ecs-frontend
-      - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
-      - echo "Generated imageDetail.json:"
-      - echo $DOCKER_CONTAINER_NAME
-      - cat appspec.yml
+#   post_build:
+#     commands:
+#       - echo Build completed on `date`
+#       - echo Pushing the Docker image to ECR...
+#       - docker push $REPOSITORY_URI:$IMAGE_TAG
+#       - docker push $REPOSITORY_URI:latest
+#       #- aws ecs describe-task-definition --task-definition angular-14-ecs --region ap-south-1 | jq .taskDefinition > taskdef.json
+#       - DOCKER_CONTAINER_NAME=ecs-frontend
+#       - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+#       - echo "Generated imageDetail.json:"
+#       - echo $DOCKER_CONTAINER_NAME
+#       - cat appspec.yml
 
-artifacts:
-  files:
-    - taskdef.json
-    - appspec.yml
-    - imageDetail.json
+# artifacts:
+#   files:
+#     - taskdef.json
+#     - appspec.yml
+#     - imageDetail.json

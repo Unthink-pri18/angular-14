@@ -3,7 +3,7 @@ Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: "<hkjhkj>"
+        TaskDefinition: "arn:aws:ecs:ap-south-1:145023127397:task-definition/angular-14-ecs:1"
         LoadBalancerInfo:
-          ContainerName: "<hkjhk>"
+          ContainerName: "ecs-frontend"
           ContainerPort: 4001
